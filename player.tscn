@@ -1,0 +1,44 @@
+[gd_scene load_steps=6 format=3 uid="uid://cd3tdhiuu36ub"]
+
+[ext_resource type="Script" uid="uid://dms6ffxa0fier" path="res://Assets/Scripts/Player.gd" id="1_tgki7"]
+[ext_resource type="Texture2D" uid="uid://1l44uhl1qnc4" path="res://Assets/Sprites/Player/playerShip1_blue.png" id="2_ebihn"]
+[ext_resource type="PackedScene" uid="uid://d4j6dt44nej4m" path="res://Assets/Prefabs/playerbullet.tscn" id="2_x4ukv"]
+[ext_resource type="Texture2D" uid="uid://co028rr6mmige" path="res://Assets/Sprites/Player/gun00.png" id="3_ebihn"]
+[ext_resource type="Script" uid="uid://ckd0vuo5kpd43" path="res://Assets/Scripts/living_unit.gd" id="3_m0ojv"]
+
+[node name="Player" type="CharacterBody2D" groups=["Player"]]
+script = ExtResource("1_tgki7")
+MyBullet = ExtResource("2_x4ukv")
+
+[node name="HealthController" type="Node2D" parent="."]
+script = ExtResource("3_m0ojv")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_ebihn")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-14, 28, -8, 37, 8, 37, 14, 28, 41, 21, 43, 25, 46, 25, 50, -5, 46, -7, 43, -4, 41, -1, 36, 2, 12, -12, 8, -37, -8, -37, -12, -12, -35, 1, -41, 0, -44, -6, -49, -6, -47, 24, -43, 25, -41, 21)
+
+[node name="LeftGun" type="Marker2D" parent="."]
+z_index = -1
+position = Vector2(-36, -5)
+scale = Vector2(0.5, 0.5)
+
+[node name="Sprite2D" type="Sprite2D" parent="LeftGun"]
+texture = ExtResource("3_ebihn")
+
+[node name="RightGun" type="Marker2D" parent="."]
+z_index = -1
+position = Vector2(36, -5)
+scale = Vector2(0.5, 0.5)
+
+[node name="Sprite2D" type="Sprite2D" parent="RightGun"]
+texture = ExtResource("3_ebihn")
+
+[node name="ShotCooldown" type="Timer" parent="."]
+wait_time = 0.3
+one_shot = true
+
+[connection signal="get_sprite" from="HealthController" to="." method="_on_health_controller_get_sprite"]
+[connection signal="kill_parent" from="HealthController" to="." method="_on_health_controller_kill_parent"]
+[connection signal="timeout" from="ShotCooldown" to="." method="_on_shoot_cooldown_timeout"]

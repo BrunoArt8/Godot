@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://b1j6ooxboxn8n"]
+
+[ext_resource type="Script" uid="uid://crncnioedenhr" path="res://Assets/Scripts/Bullet.gd" id="1_afnup"]
+[ext_resource type="Texture2D" uid="uid://b38gy3w7jm4l7" path="res://Assets/Sprites/Bullet/laserRed04.png" id="2_afnup"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_lc6ji"]
+radius = 6.0
+height = 38.0
+
+[node name="EnemyBullet" type="Area2D" groups=["EnemyBullet"]]
+script = ExtResource("1_afnup")
+speed = Vector2(0, -300)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = -2
+texture = ExtResource("2_afnup")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_lc6ji")
+
+[node name="DespawnTimer" type="Timer" parent="."]
+wait_time = 10.0
+autostart = true
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="DespawnTimer" to="." method="_on_despawn_timer_timeout"]

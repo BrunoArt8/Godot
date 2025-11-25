@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://dv8o5ltl1f1wt"]
+
+[ext_resource type="PackedScene" uid="uid://cd3tdhiuu36ub" path="res://Assets/Prefabs/player.tscn" id="1_qplxx"]
+[ext_resource type="PackedScene" uid="uid://d4j6dt44nej4m" path="res://Assets/Prefabs/playerbullet.tscn" id="3_elf4b"]
+[ext_resource type="PackedScene" uid="uid://ccmbldvctr0p0" path="res://Assets/Prefabs/enemy.tscn" id="3_guoxd"]
+
+[node name="Main" type="Node2D"]
+
+[node name="Player" parent="." instance=ExtResource("1_qplxx")]
+
+[node name="Bullet" parent="." instance=ExtResource("3_elf4b")]
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.3
+
+[node name="Enemy" parent="." instance=ExtResource("3_guoxd")]
+position = Vector2(437, 66)
+
+[connection signal="timeout" from="Timer" to="Player" method="_on_timer_timeout"]
